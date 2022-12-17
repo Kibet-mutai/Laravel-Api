@@ -49,6 +49,14 @@ class OrderController extends Controller
            }
     }
 
+
+    public function show() {
+        if (auth('sanctum')->check()) {
+            return Order::latest()->get();
+        }
+        
+    }
+
 }
    
 

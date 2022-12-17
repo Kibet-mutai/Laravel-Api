@@ -31,4 +31,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/products/{id}', [ProductsController::class, 'destroy']);
     Route::post('/logout', [Authcontroller::class, 'logout']);
     Route::post('/addcart', [OrderController::class, 'order']);
+    Route::get('/cart', [OrderController::class, 'show']);
 });

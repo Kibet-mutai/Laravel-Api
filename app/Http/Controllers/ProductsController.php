@@ -27,16 +27,19 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
+        $data = $request->validate([
             'name'=>'required',
             'tags'=>'required',
             'price'=> 'required',
             'description'=> 'required',
-            // age'=> 'required','im
+            'image'=> 'required',
             'quantity'=> 'required',
         ]);
 
-        return Products::create($request->all());
+        if($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+        Products::create($data);
     }
 
     /**
