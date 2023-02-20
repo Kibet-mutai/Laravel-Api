@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\Products;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -15,7 +15,7 @@ class OrderController extends Controller
             $user_id = auth('sanctum')->user()->id;
             $product_id = $request->product_id;
             $quantity = $request->quantity;
-            $product_check = Products::where('id', $product_id)->first();
+            $product_check = Product::where('id', $product_id)->first();
             if($product_check){
 
                 if(Order::where('product_id', $product_id)->where('user_id', $user_id)->exists()){
@@ -35,12 +35,12 @@ class OrderController extends Controller
                         'status'=>201,
                         'message'=>$product_check->name. 'added to cart succcessfully'
                 ]);
-                
+
                 }
             }
 
         }
-        
+
         else {
             return response()->json([
                 'status'=>401,
@@ -54,9 +54,9 @@ class OrderController extends Controller
         if (auth('sanctum')->check()) {
             return Order::latest()->get();
         }
-        
+
     }
 
 }
-   
+
 
