@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
-class ProductController extends Controller
+class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -98,7 +98,7 @@ class ProductController extends Controller
 
 
 
-    public function search_Product(Request $request)
+    public function search_product(Request $request)
     {
         try
         {

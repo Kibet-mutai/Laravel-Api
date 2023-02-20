@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-    
+
 
     // $role = Role::create(['name' => 'admin']);
     // $role = Role::create(['name' => 'editor']);
@@ -45,4 +45,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $guard = 'api';
 }

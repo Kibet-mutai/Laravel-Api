@@ -64,12 +64,12 @@ class Authcontroller extends Controller
         ];
 
         return response($response,201);
- 
+
     }
 }
 
 
 
 
-$customerRole = Role::create(['name' => 'customer']);
-$adminRole = Role::create(['name' => 'admin']);
+// $customerRole = Role::create(['name' => 'customer']);
+// $adminRole = Role::create(['name' => 'admin']);

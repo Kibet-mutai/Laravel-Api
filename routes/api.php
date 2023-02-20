@@ -21,16 +21,14 @@ Route::post('/register', [Authcontroller::class, 'register']);
 Route::post('/login', [Authcontroller::class, 'login']);
 Route::get('/products', [ProductsController::class, 'index']);
 
-Route::get('/products/{id}', [ProductsController::class, 'detail']);
-
 Route::get('/products/search', [ProductsController::class, 'search_product']);
 Route::get('/products/filter', [ProductsController::class, 'filter']);
-
+Route::get('/products/{id}', [ProductsController::class, 'detail']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('admin/products', [ProductsController::class, 'store'])->middleware('admin');
-    Route::put('admin/products/{id}', [ProductsController::class, 'update'])->middleware('admin');
-    Route::delete('admin/products/{id}', [ProductsController::class, 'destroy'])->middleware('admin');
+    Route::post('admin/products', [ProductsController::class, 'store']);
+    Route::put('admin/products/{id}', [ProductsController::class, 'update']);
+    Route::delete('admin/products/{id}', [ProductsController::class, 'destroy']);
     Route::post('/logout', [Authcontroller::class, 'logout']);
     Route::post('customer/addcart', [OrderController::class, 'order']);
     Route::get('customer/cart', [OrderController::class, 'show']);
