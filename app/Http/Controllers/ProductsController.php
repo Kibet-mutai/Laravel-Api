@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Products;
+use App\Models\Product;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $product = Products::paginate(6);
+        $product = Product::paginate(6);
         return response()->json(['data'=>$product]);
 
     }
@@ -39,7 +39,7 @@ class ProductsController extends Controller
         if($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('images', 'public');
         }
-        Products::create($data);
+        Product::create($data);
 
         return response()->json(['message'=>'Product created!','data'=>$data]);
     }
@@ -52,7 +52,7 @@ class ProductsController extends Controller
      */
     public function detail($id)
     {
-        $product = Products::findOrFail($id);
+        $product = Product::findOrFail($id);
         return response()->json(['data'=>$product]);
     }
 
@@ -65,7 +65,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Products = Products::findOrFail($id);
+        $Product = Product::findOrFail($id);
         $data = $request->validate([
             'name'=>'required',
             'price'=> 'required',
@@ -77,7 +77,7 @@ class ProductsController extends Controller
         if($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('images', 'public');
         }
-        $Products->update($data);
+        $Product->update($data);
         return response()->json(['message'=>'Product updated!','data'=>$data]);
     }
 
@@ -89,7 +89,7 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        $product = Products::findOrFail($id);
+        $product = Product::findOrFail($id);
 
         $product->delete();
 
@@ -98,20 +98,20 @@ class ProductsController extends Controller
 
 
 
-    public function search_products(Request $request)
+    public function search_Product(Request $request)
     {
         try
         {
             $search = $request->input('search');
-            $products = Products::where('name', 'like', '%' . $search . '%')
+            $Product = Product::where('name', 'like', '%' . $search . '%')
                                 ->orWhere('description', 'like', '%' . $search . '%')
                                 ->get();
 
-            if (!$products->count()) {
+            if (!$Product->count()) {
                 throw new \Exception("No results found for the search query.");
             }
 
-            return response()->json(['products' => $products]);
+            return response()->json(['Product' => $Product]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
@@ -122,13 +122,13 @@ class ProductsController extends Controller
     {
         try {
             $category = $request->input('category');
-            $Products = Products::whereHas('category', function ($query) use ($category) {
+            $Product = Product::whereHas('category', function ($query) use ($category) {
                 $query->where('category', $category);
             })->get();
 
             return response()->json([
                 'status' => 'success',
-                'data' => $Products
+                'data' => $Product
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

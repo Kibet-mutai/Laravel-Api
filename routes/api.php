@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\Authcontroller;
-use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Authcontroller;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,8 @@ Route::get('/products', [ProductsController::class, 'index']);
 
 Route::get('/products/{id}', [ProductsController::class, 'detail']);
 
-// Route::get('/products/search', [ProductsController::class, 'scopeFilter']);
+Route::get('/products/search', [ProductsController::class, 'search_product']);
+Route::get('/products/filter', [ProductsController::class, 'filter']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -32,4 +34,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [Authcontroller::class, 'logout']);
     Route::post('customer/addcart', [OrderController::class, 'order']);
     Route::get('customer/cart', [OrderController::class, 'show']);
+
+    Route::get('/category', [CategoryController::class, 'index']);
+
+
+    Route::post('admin/category', [CategoryController::class, 'store'])->middleware('admin');
+    Route::put('admin/category/{id}', [CategoryController::class, 'update'])->middleware('admin');
+    Route::delete('admin/category/{id}', [CategoryController::class, 'destroy'])->middleware('admin');
+    Route::get('/category/{id}', [CategoryController::class, 'detail']);
 });
