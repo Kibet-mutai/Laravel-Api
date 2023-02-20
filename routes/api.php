@@ -26,10 +26,10 @@ Route::get('/products/{id}', [ProductsController::class, 'detail']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/products', [ProductsController::class, 'store']);
-    Route::put('/products/{id}', [ProductsController::class, 'update']);
-    Route::delete('/products/{id}', [ProductsController::class, 'destroy']);
+    Route::post('admin/products', [ProductsController::class, 'store'])->middleware('admin');
+    Route::put('admin/products/{id}', [ProductsController::class, 'update'])->middleware('admin');
+    Route::delete('admin/products/{id}', [ProductsController::class, 'destroy'])->middleware('admin');
     Route::post('/logout', [Authcontroller::class, 'logout']);
-    Route::post('/addcart', [OrderController::class, 'order']);
-    Route::get('/cart', [OrderController::class, 'show']);
+    Route::post('customer/addcart', [OrderController::class, 'order']);
+    Route::get('customer/cart', [OrderController::class, 'show']);
 });
