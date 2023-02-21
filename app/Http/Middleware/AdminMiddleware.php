@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 
 
 
@@ -20,10 +20,19 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->hasRole('admin')) {
-            return $next($request);
+        if (Auth::check()) {
+            if(auth()->user()->tokenCan('server:admin')){
+                return $next($request);
+            } else{
+                return response()->json([
+                    'message'=>'Access denied!',
+                ],403);
+            }
+
+        } else{
+            return response()->json([
+                'message'=>'Please Login',
+            ],401);
         }
-    
-        return redirect()->json('home');
     }
 }

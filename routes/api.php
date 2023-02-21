@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authcontroller;
@@ -41,3 +42,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('admin/category/{id}', [CategoryController::class, 'destroy'])->middleware('admin');
     Route::get('/category/{id}', [CategoryController::class, 'detail']);
 });
+
+
+Route::get('/sales', [AdminController::class, 'sales']);
+Route::get('/in_stock/{id}', [AdminController::class, 'in_stock']);
+Route::get('/check/{id}', [AdminController::class, 'check']);

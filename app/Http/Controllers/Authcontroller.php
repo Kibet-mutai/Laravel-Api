@@ -13,16 +13,23 @@ class Authcontroller extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed',
+            'is_admin' => 'required|in:0,1'
         ]);
 
         $user = User::create([
             'name'=> $data['name'],
             'email'=> $data['email'],
-            'password'=> bcrypt($data['password'])
+            'password'=> bcrypt($data['password']),
+            'is_admin' =>$data['is_admin']
         ]);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        if($user->is_admin == 1){
+            $token = $user->createToken('Admin_token', ['server:admin'])->plainTextToken;
+        }
+        else{
+            $token = $user->createToken('myapptoken')->plainTextToken;
+        }
 
         $response = [
             'user' => $user,
@@ -55,8 +62,17 @@ class Authcontroller extends Controller
             return response([
                 'message' => 'Invalid email or password'
             ],401);
+        } else{
+            if($user->is_admin == 1){
+                $token = $user->createToken('Admin_token', ['server:admin'])->plainTextToken;
+            }
+            else{
+                $token = $user->createToken('myapptoken')->plainTextToken;
+            }
         }
-        $token = $user->createToken('myapptoken')->plainTextToken;
+
+
+
 
         $response = [
             'user' => $user,
