@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authcontroller;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 
@@ -30,8 +30,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('admin/products/{id}', [ProductsController::class, 'update']);
     Route::delete('admin/products/{id}', [ProductsController::class, 'destroy']);
     Route::post('/logout', [Authcontroller::class, 'logout']);
-    Route::post('customer/addcart', [OrderController::class, 'order']);
-    Route::get('customer/cart', [OrderController::class, 'show']);
+    Route::post('customer/addcart', [CartController::class, 'add_cart']);
+    Route::get('customer/cart', [CartController::class, 'show']);
 
     Route::get('/category', [CategoryController::class, 'index']);
 

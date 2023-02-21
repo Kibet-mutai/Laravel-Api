@@ -6,11 +6,11 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class CartController extends Controller
 {
     //create order
 
-    public function order(Request $request) {
+    public function add_cart(Request $request) {
         if (auth('sanctum')->check()){
             $user_id = auth('sanctum')->user()->id;
             $product_id = $request->product_id;
