@@ -18,4 +18,9 @@ class Order extends Model
         'sub_county',
         'county',
     ];
+
+
+    public function order_items() {
+        return $this->hasMany(OrderItem::class, 'order_id', 'id');
+    }
 }

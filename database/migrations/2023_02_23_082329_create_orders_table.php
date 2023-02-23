@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('zipcode');
             $table->string('sub_county');
             $table->string('county');
+            $table->string('payment_method');
+            $table->integer('payment_id')->nullable();
+            $table->integer('tracking_no')->nullable();
+            $table->boolean('is_delivered')->default(0);
             $table->timestamps();
         });
     }
