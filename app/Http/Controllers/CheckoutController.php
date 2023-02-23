@@ -39,7 +39,8 @@ class CheckoutController extends Controller
         $order->first_name = $request->first_name;
         $order->sub_county = $request->sub_county;
         $order->county = $request->county;
-        $order->payment_method = 'paypal';
+        $order->payment_id = $request->payment_id;
+        $order->payment_method = $request->payment_method;
         $order->tracking_no = 'store'.rand(1000, 99999);
 
         $order->save();
@@ -67,5 +68,20 @@ class CheckoutController extends Controller
             'order' => $order,
             'items' => $order_items
         ]);
+    }
+
+
+
+    public function cancel_order($id){
+        $user_id = auth()->user()->id;
+        $user= Auth::findOrFail($user_id);
+        $order = Order::findOrFail($id);
+        if ($user->user_id !=auth()->user()->id){
+            return response()->json(['error' => 'Unauthorized access'], 401);
+        } else {
+            Order::destroy($order);
+            return response()->json(['message' => 'Order deleted successfully']);
+
+        }
     }
 }
