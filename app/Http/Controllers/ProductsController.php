@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -31,6 +32,7 @@ class ProductsController extends Controller
         $data = $request->validate([
             'name'=>'required',
             'price'=> 'required',
+            'category_id' => 'required|exists:category,id',
             'description'=> 'required',
             'image'=> 'required',
             'quantity'=> 'required',
@@ -41,7 +43,7 @@ class ProductsController extends Controller
         }
         Product::create($data);
 
-        return response()->json(['message'=>'Product created!','data'=>$data]);
+        return response()->json(['message'=>'Product created!','data'=>$data,]);
     }
 
     /**

@@ -31,8 +31,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('admin/products/{id}', [ProductsController::class, 'update']);
     Route::delete('admin/products/{id}', [ProductsController::class, 'destroy']);
     Route::post('/logout', [Authcontroller::class, 'logout']);
-    Route::post('customer/addcart', [CartController::class, 'add_cart']);
-    Route::get('customer/cart', [CartController::class, 'show']);
 
     Route::get('/category', [CategoryController::class, 'index']);
 
@@ -41,6 +39,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('admin/category/{id}', [CategoryController::class, 'update'])->middleware('admin');
     Route::delete('admin/category/{id}', [CategoryController::class, 'destroy'])->middleware('admin');
     Route::get('/category/{id}', [CategoryController::class, 'detail']);
+
+
+    Route::post('/cart', [CartController::class, 'add_to_cart']);
+    Route::put('update_cart/{id}', [CartController::class, 'update_cart']);
+    Route::delete('delete_cart/{id}', [CartController::class, 'delete_cart']);
+    Route::get('cart_items/{id}', [CartController::class, 'cart_detail']);
 });
 
 
