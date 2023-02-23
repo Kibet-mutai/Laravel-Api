@@ -44,7 +44,8 @@ class CartController extends Controller
 
 
     public function update_cart(Request $request, $id) {
-        $user = User::findOrFail($id);
+        $user_id = auth()->user()->id;
+        $user = User::findOrFail($user_id);
         if($user->user_id != auth()->user()->id){
             return response()->json([
                 'message' => 'Unauthorized!'
@@ -64,22 +65,27 @@ class CartController extends Controller
 
 
     public function cart_detail(Request $request, $id) {
-        $user = User::findOrFail($id);
+        $user_id = auth()->user()->id;
+        $user = User::findOrFail($user_id);
         if($user->user_id != auth()->user()->id){
             return response()->json([
                 'message' => 'Unauthorized!'
             ],401);
         }
         $cart_items = Cart::findOrFail($id);
+        $total_price = $request->input('price') * $request->input('quantity');
         return response()->json([
-            'cart_items' => $cart_items
+            'cart_items' => $cart_items,
+            'total' => $total_price
         ]);
     }
 
 
 
     public function delete_cart($id){
-        $user = User::findOrFail($id);
+        $user_id = auth()->user()->id;
+        $user = User::findOrFail($user_id);
+        // dd($user);
         if($user->user_id != auth()->user()->id){
             return response()->json([
                 'message' => 'Unauthorized!'

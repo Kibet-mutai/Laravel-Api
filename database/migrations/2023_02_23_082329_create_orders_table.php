@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('county');
             $table->string('payment_method');
             $table->integer('payment_id')->nullable();
-            $table->integer('tracking_no')->nullable();
-            $table->boolean('is_delivered')->default(0);
+            $table->integer('tracking_no');
+            $table->tinyInteger('is_delivered')->default(0);
             $table->timestamps();
         });
     }
