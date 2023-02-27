@@ -7,6 +7,7 @@ use App\Http\Controllers\Authcontroller;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductsController;
 
 /*
@@ -50,6 +51,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/order', [CheckoutController::class, 'place_order']);
     Route::post('/cancel/order/{id}', [CheckoutController::class, 'cancel_order']);
+
+    Route::post('/profile_create', [CustomerController::class, 'create_profile']);
+    Route::put('/update_profile/{id}', [CustomerController::class, 'update_profile']);
+    Route::delete('/delete_profile/{id}', [CustomerController::class, 'delete_profile']);
+    Route::get('profile/{id}', [CustomerController::class, 'profile']);
 });
 
 
