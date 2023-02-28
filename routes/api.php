@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SellerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/update_profile/{id}', [CustomerController::class, 'update_profile']);
     Route::delete('/delete_profile/{id}', [CustomerController::class, 'delete_profile']);
     Route::get('profile/{id}', [CustomerController::class, 'profile']);
+
+    Route::post('/create', [SellerController::class, 'create'])->middleware('admin');
+    Route::put('/update/{id}', [SellerController::class, 'update'])->middleware('admin');
+    Route::delete('/delete/{id}', [SellerController::class, 'delete'])->middleware('admin');
+    Route::get('/seller/{id}', [SellerController::class, 'show'])->middleware('admin');
 });
 
 

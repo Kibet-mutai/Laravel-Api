@@ -412,6 +412,368 @@
                     }
                 }
             }
+        },
+        "/api/seller/{id}": {
+            "get": {
+                "tags": [
+                    "Seller"
+                ],
+                "summary": "Get Profile details",
+                "operationId": "a54f947520122845b360032325d33dd0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "full_name": {
+                                            "type": "string",
+                                            "example": "full_name"
+                                        },
+                                        "phone_no": {
+                                            "type": "string",
+                                            "example": "phone_no"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "email"
+                                        },
+                                        "nearest_town": {
+                                            "type": "string",
+                                            "example": "nearest_town"
+                                        },
+                                        "address": {
+                                            "type": "string",
+                                            "example": "address"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/create": {
+            "post": {
+                "tags": [
+                    "Seller"
+                ],
+                "summary": "Create Seller's Account",
+                "operationId": "f19da7a9e1f6230fa49f3360bcfbd498",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "": {
+                                        "properties": {
+                                            "full_name": {
+                                                "type": "string"
+                                            },
+                                            "phone_no": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "nearest_town": {
+                                                "type": "string"
+                                            },
+                                            "address": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "first_name": "example first_name",
+                                    "phone_no": "example phone_no",
+                                    "email": "example email",
+                                    "nearest_town": "example nearest_town",
+                                    "address": "example address"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "full_name": {
+                                            "type": "string",
+                                            "example": "full_name"
+                                        },
+                                        "phone_no": {
+                                            "type": "string",
+                                            "example": "phone_no"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "email"
+                                        },
+                                        "nearest_town": {
+                                            "type": "string",
+                                            "example": "nearest_town"
+                                        },
+                                        "address": {
+                                            "type": "string",
+                                            "example": "address"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/update/{id}": {
+            "put": {
+                "tags": [
+                    "Seller"
+                ],
+                "summary": "Update Account",
+                "operationId": "ca6cc9912c33cf98115dd41e11ddea35",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "": {
+                                        "properties": {
+                                            "full_name": {
+                                                "type": "string"
+                                            },
+                                            "phone_no": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "nearest_town": {
+                                                "type": "string"
+                                            },
+                                            "address": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "first_name": "example first_name",
+                                    "phone_no": "example phone_no",
+                                    "email": "example email",
+                                    "nearest_town": "example nearest_town",
+                                    "address": "example address"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "full_name": {
+                                            "type": "string",
+                                            "example": "full_name"
+                                        },
+                                        "phone_no": {
+                                            "type": "string",
+                                            "example": "phone_no"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "email"
+                                        },
+                                        "nearest_town": {
+                                            "type": "string",
+                                            "example": "nearest_town"
+                                        },
+                                        "address": {
+                                            "type": "string",
+                                            "example": "address"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Seller"
+                ],
+                "summary": "Delete profile",
+                "operationId": "043d68e7c4f58afe08754ec4e50e560d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Profile Deleted!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
