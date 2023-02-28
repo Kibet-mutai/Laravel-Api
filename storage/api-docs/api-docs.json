@@ -1,0 +1,417 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "E-Commerce",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/api/profile_create": {
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Create Customer profile",
+                "operationId": "9a7a0c1ffc29283f1c7c68e64a8b2861",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "": {
+                                        "properties": {
+                                            "first_name": {
+                                                "type": "string"
+                                            },
+                                            "last_name": {
+                                                "type": "string"
+                                            },
+                                            "phone_no": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "nearest_town": {
+                                                "type": "string"
+                                            },
+                                            "county": {
+                                                "type": "string"
+                                            },
+                                            "address": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "first_name": "example last_name",
+                                    "phone_no": "example phone_no",
+                                    "email": "example email",
+                                    "nearest_town": "example nearest_town",
+                                    "county": "example county",
+                                    "address": "example address"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "first_name"
+                                        },
+                                        "last_name": {
+                                            "type": "string",
+                                            "example": "last_name"
+                                        },
+                                        "phone_no": {
+                                            "type": "string",
+                                            "example": "phone_no"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "email"
+                                        },
+                                        "nearest_town": {
+                                            "type": "string",
+                                            "example": "nearest_town"
+                                        },
+                                        "county": {
+                                            "type": "string",
+                                            "example": "county"
+                                        },
+                                        "address": {
+                                            "type": "string",
+                                            "example": "address"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/update_profile/{id}": {
+            "put": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Update Customer profile",
+                "operationId": "9f8d4c057729c1c8037f63657480f8d0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "": {
+                                        "properties": {
+                                            "first_name": {
+                                                "type": "string"
+                                            },
+                                            "last_name": {
+                                                "type": "string"
+                                            },
+                                            "phone_no": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "nearest_town": {
+                                                "type": "string"
+                                            },
+                                            "county": {
+                                                "type": "string"
+                                            },
+                                            "address": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "first_name": "example last_name",
+                                    "phone_no": "example phone_no",
+                                    "email": "example email",
+                                    "nearest_town": "example nearest_town",
+                                    "county": "example county",
+                                    "address": "example address"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "first_name"
+                                        },
+                                        "last_name": {
+                                            "type": "string",
+                                            "example": "last_name"
+                                        },
+                                        "phone_no": {
+                                            "type": "string",
+                                            "example": "phone_no"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "email"
+                                        },
+                                        "nearest_town": {
+                                            "type": "string",
+                                            "example": "nearest_town"
+                                        },
+                                        "county": {
+                                            "type": "string",
+                                            "example": "county"
+                                        },
+                                        "address": {
+                                            "type": "string",
+                                            "example": "address"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/delete_profile/{id}": {
+            "delete": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Delete profile",
+                "operationId": "edad9fc7a91165e99c048aa2aca32b1d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Profile Deleted!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/profile/{id}": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Get Profile details",
+                "operationId": "220959e72ec640117947a532de062782",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "first_name"
+                                        },
+                                        "last_name": {
+                                            "type": "string",
+                                            "example": "last_name"
+                                        },
+                                        "phone_no": {
+                                            "type": "string",
+                                            "example": "phone_no"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "email"
+                                        },
+                                        "nearest_town": {
+                                            "type": "string",
+                                            "example": "nearest_town"
+                                        },
+                                        "county": {
+                                            "type": "string",
+                                            "example": "county"
+                                        },
+                                        "address": {
+                                            "type": "string",
+                                            "example": "address"
+                                        },
+                                        "balance": {
+                                            "type": "string",
+                                            "example": "balance"
+                                        },
+                                        "orders": {
+                                            "type": "string",
+                                            "example": "orders"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2021-12-11T09:25:53.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
