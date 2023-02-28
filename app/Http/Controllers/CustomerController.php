@@ -89,18 +89,29 @@ class CustomerController extends Controller
 
         $user = Auth::user();
         if ($user->customer) {
-            return response()->json(['error' => 'You already have a freelancer profile']);
+            return response()->json(['error' => 'You already have a profile']);
         }
         $data = $request->validate([
             'first_name'=>'required|string|max:255',
             'last_name'=>'required|string|max:255',
+            'email'=>'required|email:unique',
+            'phone_no'=>'required',
+            'address'=>'required',
+            'county'=>'required',
+            'nearest_town' => 'required'
         ]);
         $customer = new Customer;
         $customer->user_id = auth()->user()->id;
         $customer->first_name = $request->first_name;
         $customer->last_name= $request->last_name;
+        $customer->phone_no= $request->phone_no;
+        $customer->email= $request->email;
+        $customer->address= $request->address;
+        $customer->nearest_town= $request->nearest_town;
+        $customer->county= $request->county;
+        $customer->payment_method= $request->payment_method;
+        $customer->payment_id= $request->payment_id;
         $customer->balance = '40000';
-        $customer->order = $request->order()->id;
 
         $customer->save();
 
@@ -206,6 +217,11 @@ class CustomerController extends Controller
         $data = $request->validate([
             'first_name'=>'required|string|max:255',
             'last_name'=>'required|string|max:255',
+            'email'=>'required|email:unique',
+            'phone_no'=>'required',
+            'address'=>'required',
+            'county'=>'required',
+            'nearest_town' => 'required'
         ]);
 
         $customer->update($data);
@@ -305,6 +321,11 @@ class CustomerController extends Controller
 
     public function profile($id){
         $customer = Customer::findOrFail($id);
+        if($customer->user_id != auth()->user()->id){
+            return response()->json([
+                'message'=>'Unauthorized!'
+            ], 401);
+        }
         return response()->json(['data' => $customer]);
     }
 }
