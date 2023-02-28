@@ -15,15 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('phone_no');
-            $table->string('email');
-            $table->string('zipcode');
-            $table->string('sub_county');
-            $table->string('county');
-            $table->string('payment_method');
+            $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->integer('payment_id')->nullable();
             $table->integer('tracking_no');
             $table->tinyInteger('is_delivered')->default(0);

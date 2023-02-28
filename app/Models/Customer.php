@@ -13,15 +13,15 @@ class Customer extends Model
         'user_id',
         'first_name',
         'last_name',
-        'order_id',
-        'balance'
+        'balance',
+        'phone_no',
+        'email',
+        'nearest_town',
+        'county',
+        'payment_method',
+        'payment_id',
+        'address'
     ];
-
-
-    public function user() {
-        return $this->hasOne(User::class);
-    }
-
 
     public function order(){
         return $this->hasOne(OrderItem::class);
