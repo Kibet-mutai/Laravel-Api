@@ -9,6 +9,67 @@ use Spatie\Permission\Models\Role;
 
 class Authcontroller extends Controller
 {
+
+    /**
+     * Create account
+     * @OA\Post (
+     *     path="/api/register",
+     *     tags={"Auth"},
+     *     summary="Post your email and password and we will return a token. Use the token in the 'Authorization' header like so 'Bearer YOUR_TOKEN'",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="password",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="password_confirmation",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="is_admin",
+     *                          type="boolean"
+     *                      ),
+     *                 ),
+     *                 example={
+     *                     "name":"example name",
+     *                     "email":"example email",
+     *                     "password":"example password",
+     *                     "password_confirmation":"example password_confirmation"
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="email", type="string", example="email"),
+     *              @OA\Property(property="token", type="string", example="token"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="The provided credentials are incorrect."
+     *       )
+     * )
+     */
     public function register(Request $request) {
         $data = $request->validate([
             'name' => 'required|string',
@@ -39,6 +100,8 @@ class Authcontroller extends Controller
         return response($response, 201);
     }
 
+
+
     public function logout(Request $request) {
         auth()->user()->tokens()->delete();
 
@@ -47,6 +110,59 @@ class Authcontroller extends Controller
         ];
     }
 
+
+
+    /**
+     * sign in
+     * @OA\Post (
+     *     path="/api/login",
+     *     tags={"Auth"},
+     *     summary="Post your email and password and we will return a token. Use the token in the 'Authorization' header like so 'Bearer YOUR_TOKEN'",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="password",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="is_admin",
+     *                          type="integer"
+     *                      ),
+     *                 ),
+     *                 example={
+     *                     "email":"example email",
+     *                     "password":"example password",
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="email", type="string", example="email"),
+     *              @OA\Property(property="token", type="string", example="token"),
+     *              @OA\Property(property="role", type="string", example="role"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="The provided credentials are incorrect."
+     *       )
+     * )
+     */
     public function login(Request $request) {
         $data = $request->validate([
             'email' => 'required|string',
