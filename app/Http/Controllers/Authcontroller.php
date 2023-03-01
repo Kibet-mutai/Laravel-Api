@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use OpenApi\Generator;
+use App\Forms\TokenForm as Form;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -16,6 +19,11 @@ class Authcontroller extends Controller
      *     path="/api/register",
      *     tags={"Auth"},
      *     summary="Post your email and password and we will return a token. Use the token in the 'Authorization' header like so 'Bearer YOUR_TOKEN'",
+     *     operationId="",
+     *     description="",
+     *     @OA\RequestBody(
+     *       required=true,
+     *       description="The Token Request"),
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",

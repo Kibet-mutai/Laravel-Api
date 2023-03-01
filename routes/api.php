@@ -10,6 +10,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/update/{id}', [SellerController::class, 'update'])->middleware('admin');
     Route::delete('/delete/{id}', [SellerController::class, 'delete'])->middleware('admin');
     Route::get('/seller/{id}', [SellerController::class, 'show'])->middleware('admin');
+
+    Route::post('create/store', [StoreController::class, 'create_store']);
 });
 
 

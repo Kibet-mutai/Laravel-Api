@@ -132,8 +132,8 @@ class SellerController extends Controller
         }
         $data = $request->validate([
             'full_name'=>'required|string|max:255',
-            'email'=>'required|email:unique',
-            'phone_no'=>'required',
+            // 'email'=>'required|email:unique',
+            // 'phone_no'=>'required',
             'address'=>'required',
             'nearest_town' => 'required'
         ]);
@@ -141,8 +141,8 @@ class SellerController extends Controller
         $seller = new Seller;
         $seller->user_id = auth()->user()->id;
         $seller->full_name = $request->full_name;
-        $seller->email = $request->email;
-        $seller->phone_no = $request->phone_no;
+        // $seller->email = $request->email;
+        // $seller->phone_no = $request->phone_no;
         $seller->address = $request->address;
         $seller->nearest_town = $request->nearest_town;
 
