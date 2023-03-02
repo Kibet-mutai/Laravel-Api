@@ -1,8 +1,7 @@
 ## E-commerce Api endpoints
 
 ## Documentation
-
-https://documenter.getpostman.com/view/24270409/2s93CKNuAL
+Ongoing.
 
 ## License
 
