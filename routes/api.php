@@ -64,7 +64,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/delete/{id}', [SellerController::class, 'delete'])->middleware('admin');
     Route::get('/seller/{id}', [SellerController::class, 'show'])->middleware('admin');
 
-    Route::post('create/store', [StoreController::class, 'create_store']);
+    Route::post('/create/store', [StoreController::class, 'create_store']);
+    Route::delete('/delete/store/{id}', [StoreController::class, 'delete_store']);
+    Route::get('/store/{id}', [StoreController::class, 'show']);
 });
 
 

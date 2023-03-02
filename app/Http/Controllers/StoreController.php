@@ -2,11 +2,114 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seller;
 use App\Models\Store;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
+    /**
+     * Get Storedetails
+     * @OA\Get (
+     *     path="/api/store/{id}",
+     *     tags={"Store"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="description", type="string", example="description"),
+     *              @OA\Property(property="product_id", type="string", example="product_id"),
+     *              @OA\Property(property="product_qty", type="string", example="product_qty"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z")
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthorized!")
+     *         )
+     *     )
+     * )
+     */
+    public function show($id) {
+        $seller_id = auth()->user()->id;
+        $seller = Seller::findOrFail($seller_id);
+        if ($seller->user_id != auth()->user()->id) {
+            return response()->json(['error' => 'Unauthorized access'], 401);
+        }
+
+        $store = Store::findOrFail($id);
+        $product = $store->product_id;
+        $qty = $store->product_quantity;
+        return response()->json([
+            'store'=>$store,
+            'products'=>$product,
+            'qty'=>$qty
+        ]);
+    }
+
+
+
+    /**
+     * Create Store
+     * @OA\Post (
+     *     path="/api/create/store",
+     *     tags={"Store"},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="description",
+     *                          type="string"
+     *                      )
+     *                 ),
+     *                 example={
+     *                     "name":"example name",
+     *                     "name":"example description",
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="description", type="string", example="description"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *          )
+     *      )
+     * )
+     */
+
+
+
     public function create_store(Request $request){
         $data = $request->validate([
             'name'=>'required|max:255|string',
@@ -25,6 +128,47 @@ class StoreController extends Controller
         return response()->json([
             'message'=>'Created',
             'data'=>$data
+        ]);
+    }
+
+
+    /**
+     * Delete store
+     * @OA\Delete (
+     *     path="/api/delete/store/{id}",
+     *     tags={"Store"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Profile Deleted!")
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthorized!")
+     *         )
+     *     )
+     * )
+     */
+    public function delete_store($id){
+        $seller_id = auth()->user()->id;
+        $seller = Seller::findOrFail($seller_id);
+        if ($seller->user_id != auth()->user()->id) {
+            return response()->json(['error' => 'Unauthorized access'], 401);
+        }
+        $store = Store::findOrFail($id);
+        Store::destroy($store);
+        return response()->json([
+            'msg'=>'Deleted!'
         ]);
     }
 }

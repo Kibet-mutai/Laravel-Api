@@ -12,11 +12,17 @@ class Store extends Model
     protected $fillable = [
         'seller_id',
         'name',
-        'description'
+        'description',
+        'product_id',
+        'product_quantity',
     ];
 
 
     public function seller() {
         return $this->belongsTo(Seller::class);
+    }
+
+    public function products() {
+        return $this->hasMany(Product::class);
     }
 }
