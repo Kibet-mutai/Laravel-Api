@@ -17,12 +17,17 @@ class CartController extends Controller
             'quantity' => 'required',
             'product_id' => 'required|exists:products,id'
         ]);
-        $data['user_id']=Auth::user()->id;
-        $user = auth()->user()->id;
+        // $cart = new Cart;
+        // $cart->product_id = $request->product_id;
+        // $cart->quantity = $request->quantity;
+        // $cart->customer_id = auth()->user()->id;
+        // $cart->save();
+        $data['customer_id']=Auth::user()->id;
+        $customer = auth()->user()->id;
         $product_id = $request->product_id;
         $product_check = Product::where('id', $product_id)->first();
         if($product_check) {
-            if(Cart::where('product_id', $product_id)->where('user_id', $user)->exists()){
+            if(Cart::where('product_id', $product_id)->where('user_id', $customer)->exists()){
                 return response()->json([
                     'status'=>201,
                     'message'=> $product_check->name. ' already in the Cart'
@@ -44,9 +49,9 @@ class CartController extends Controller
 
 
     public function update_cart(Request $request, $id) {
-        $user_id = auth()->user()->id;
-        $user = User::findOrFail($user_id);
-        if($user->user_id != auth()->user()->id){
+        $customer_id = auth()->user()->id;
+        $customer = User::findOrFail($customer_id);
+        if($customer->user_id != auth()->user()->id){
             return response()->json([
                 'message' => 'Unauthorized!'
             ],401);
@@ -65,9 +70,9 @@ class CartController extends Controller
 
 
     public function cart_detail(Request $request, $id) {
-        $user_id = auth()->user()->id;
-        $user = User::findOrFail($user_id);
-        if($user->user_id != auth()->user()->id){
+        $customer_id = auth()->user()->id;
+        $customer = User::findOrFail($customer_id);
+        if($customer->user_id != auth()->user()->id){
             return response()->json([
                 'message' => 'Unauthorized!'
             ],401);
@@ -83,13 +88,12 @@ class CartController extends Controller
 
 
     public function delete_cart($id){
-        $user_id = auth()->user()->id;
-        $user = User::findOrFail($user_id);
-        // dd($user);
-        if($user->user_id != auth()->user()->id){
+        $customer_id = auth()->user()->id;
+        $customer = User::findOrFail($customer_id);
+        if($customer->user_id != auth()->user()->id){
             return response()->json([
                 'message' => 'Unauthorized!'
-            ], 401);
+            ],401);
         }
         $cart_items = Cart::findOrFail($id);
         $cart_items->delete();
