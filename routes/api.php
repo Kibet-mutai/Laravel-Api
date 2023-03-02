@@ -34,10 +34,10 @@ Route::get('/products/{id}', [IndexController::class, 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/admin/products', [ProductsController::class, 'index']);
-    Route::post('admin/products', [ProductsController::class, 'store']);
-    Route::put('admin/products/{id}', [ProductsController::class, 'update']);
-    Route::delete('admin/products/{id}', [ProductsController::class, 'destroy']);
-    Route::get('/admin/products/{id}', [ProductsController::class, 'details']);
+    Route::post('/admin/products/create', [ProductsController::class, 'store']);
+    Route::put('/admin/products/update/{id}', [ProductsController::class, 'update']);
+    Route::delete('/admin/products/delete/{id}', [ProductsController::class, 'destroy']);
+    Route::get('/admin/products/{id}', [ProductsController::class, 'detail']);
     Route::post('/logout', [Authcontroller::class, 'logout']);
 
     Route::get('/category', [CategoryController::class, 'index']);

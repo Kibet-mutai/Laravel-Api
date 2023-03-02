@@ -14,6 +14,37 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     /**
+     * Products home
+     * @OA\Get (
+     *     path="/api/admin/products",
+     *     tags={"Products"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="price", type="string", example="price"),
+     *              @OA\Property(property="quantity", type="string", example="quantity"),
+     *              @OA\Property(property="category_id", type="string", example="category_id"),
+     *              @OA\Property(property="description", type="string", example="description"),
+     *              @OA\Property(property="image", type="string", example="image"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z")
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthorized!")
+     *         )
+     *     )
+     * )
+     */
+
     public function index()
     {
         $seller = auth()->user()->id;
@@ -31,6 +62,77 @@ class ProductsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * Add Products
+     * @OA\Put (
+     *     path="/api/admin/products/create",
+     *     tags={"Products"},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="price",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="quantity",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="category_id",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="description",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="image",
+     *                          type="string"
+     *                      )
+     *                 ),
+     *                 example={
+     *                     "name":"example name",
+     *                     "name":"example price",
+     *                     "quantity": "example quantity",
+     *                     "category_id":"example category_id",
+     *                     "description":"example description",
+     *                     "image":"example image",
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="price", type="string", example="price"),
+     *              @OA\Property(property="quantity", type="string", example="quantity"),
+     *              @OA\Property(property="category_id", type="string", example="category_id"),
+     *              @OA\Property(property="description", type="string", example="description"),
+     *              @OA\Property(property="image", type="string", example="image"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Unauthorized",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *          )
+     *      )
+     * )
      */
     public function store(Request $request)
     {
@@ -67,6 +169,42 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * Get Products details
+     * @OA\Get (
+     *     path="/api/admin/products/{id}",
+     *     tags={"Products"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="price", type="string", example="price"),
+     *              @OA\Property(property="quantity", type="string", example="quantity"),
+     *              @OA\Property(property="category_id", type="string", example="category_id"),
+     *              @OA\Property(property="description", type="string", example="description"),
+     *              @OA\Property(property="image", type="string", example="image"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z")
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthorized!")
+     *         )
+     *     )
+     * )
+     */
     public function detail($id)
     {
         $seller = auth()->user()->id;
@@ -84,6 +222,84 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     */
+
+      /**
+     * Update Products
+     * @OA\Put (
+     *     path="/api/admin/products/{id}",
+     *     tags={"Products"},
+     *      @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="price",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="quantity",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="category_id",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="description",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="image",
+     *                          type="string"
+     *                      ),
+     *                 ),
+     *                 example={
+     *                     "name":"example name",
+     *                     "name":"example price",
+     *                     "quantity": "example quantity",
+     *                     "category_id":"example category_id",
+     *                     "description":"example description",
+     *                     "image":"example image",
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="price", type="string", example="price"),
+     *              @OA\Property(property="quantity", type="string", example="quantity"),
+     *              @OA\Property(property="category_id", type="string", example="category_id"),
+     *              @OA\Property(property="description", type="string", example="description"),
+     *              @OA\Property(property="image", type="string", example="image"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Unauthorized",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *          )
+     *      )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -114,6 +330,35 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     /**
+     * Delete products
+     * @OA\Delete (
+     *     path="/api/admin/products/delete/{id}",
+     *     tags={"Products"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Profile Deleted!")
+     *         )
+     *     ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Forbidden",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthorized!")
+     *         )
+     *     )
+     * )
+     */
+
     public function destroy($id)
     {
         $seller = auth()->user()->id;
