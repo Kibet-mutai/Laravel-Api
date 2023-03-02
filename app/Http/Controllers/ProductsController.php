@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Seller;
 
 class ProductsController extends Controller
 {
@@ -15,6 +16,11 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $seller = auth()->user()->id;
+        $seller_id = Seller::findOrFail($seller);
+        if ($seller_id->user_id != auth()->user()->id) {
+            return response()->json(['error' => 'Unauthorized access'], 401);
+        }
         $product = Product::paginate(6);
         return response()->json(['data'=>$product]);
 
@@ -41,7 +47,16 @@ class ProductsController extends Controller
         if($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('images', 'public');
         }
-        Product::create($data);
+        $product = new Product;
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->category_id = $request->category_id;
+        $product->description = $request->description;
+        $product->image = $request->image;
+        $product->seller_id = auth()->user()->id;
+        $product->save();
+        // Product::create($data);
 
         return response()->json(['message'=>'Product created!','data'=>$data,]);
     }
@@ -54,6 +69,11 @@ class ProductsController extends Controller
      */
     public function detail($id)
     {
+        $seller = auth()->user()->id;
+        $seller_id = Seller::findOrFail($seller);
+        if ($seller_id->user_id != auth()->user()->id) {
+            return response()->json(['error' => 'Unauthorized access'], 401);
+        }
         $product = Product::findOrFail($id);
         return response()->json(['data'=>$product]);
     }
@@ -67,6 +87,11 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $seller = auth()->user()->id;
+        $seller_id = Seller::findOrFail($seller);
+        if ($seller_id->user_id != auth()->user()->id) {
+            return response()->json(['error' => 'Unauthorized access'], 401);
+        }
         $Product = Product::findOrFail($id);
         $data = $request->validate([
             'name'=>'required',
@@ -91,6 +116,11 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
+        $seller = auth()->user()->id;
+        $seller_id = Seller::findOrFail($seller);
+        if ($seller_id->user_id != auth()->user()->id) {
+            return response()->json(['error' => 'Unauthorized access'], 401);
+        }
         $product = Product::findOrFail($id);
 
         $product->delete();
@@ -98,46 +128,5 @@ class ProductsController extends Controller
         return response()->json(['message'=>'Product deleted!']);
     }
 
-
-
-    public function search_product(Request $request)
-    {
-        try
-        {
-            $search = $request->input('search');
-            $Product = Product::where('name', 'like', '%' . $search . '%')
-                                ->orWhere('description', 'like', '%' . $search . '%')
-                                ->get();
-
-            if (!$Product->count()) {
-                throw new \Exception("No results found for the search query.");
-            }
-
-            return response()->json(['Product' => $Product]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
-    }
-
-
-    public function filter(Request $request)
-    {
-        try {
-            $category = $request->input('category');
-            $Product = Product::whereHas('category', function ($query) use ($category) {
-                $query->where('category', $category);
-            })->get();
-
-            return response()->json([
-                'status' => 'success',
-                'data' => $Product
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'Not Found!',
-                'message' => $e->getMessage()
-            ], 400);
-        }
-    }
 }
 

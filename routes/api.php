@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\StoreController;
@@ -24,16 +25,19 @@ use App\Http\Controllers\StoreController;
 */
 Route::post('/register', [Authcontroller::class, 'register']);
 Route::post('/login', [Authcontroller::class, 'login']);
-Route::get('/products', [ProductsController::class, 'index']);
 
-Route::get('/products/search', [ProductsController::class, 'search_product']);
-Route::get('/products/filter', [ProductsController::class, 'filter']);
-Route::get('/products/{id}', [ProductsController::class, 'detail']);
+
+Route::get('/products', [IndexController::class, 'index']);
+Route::get('/home/search', [IndexController::class, 'search_product']);
+Route::get('/home/filter', [IndexController::class, 'filter']);
+Route::get('/products/{id}', [IndexController::class, 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/admin/products', [ProductsController::class, 'index']);
     Route::post('admin/products', [ProductsController::class, 'store']);
     Route::put('admin/products/{id}', [ProductsController::class, 'update']);
     Route::delete('admin/products/{id}', [ProductsController::class, 'destroy']);
+    Route::get('/admin/products/{id}', [ProductsController::class, 'details']);
     Route::post('/logout', [Authcontroller::class, 'logout']);
 
     Route::get('/category', [CategoryController::class, 'index']);
