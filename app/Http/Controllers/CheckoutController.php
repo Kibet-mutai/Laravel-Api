@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -13,34 +14,48 @@ use Illuminate\Support\Facades\Auth;
 class CheckoutController extends Controller
 {
     public function place_order(Request $request) {
-        if(auth()->check()){
-
-        } else {
+        $customer = Auth::user();
+        if ($customer->customer) {
             return response()->json([
-                'message' => 'Unauthorized!'
+                'error' => 'Already Placed order'
             ]);
         }
+        if(auth()->check()){
+            $order = new Order;
+            $order->customer_id= auth()->user()->id;
+            $order->payment_id = $request->payment_id;
+            $order->tracking_no = 'store'.rand(1000, 99999);
 
-        $order = new Order;
-        $order->customer_id= auth()->user()->id;
-        $order->payment_id = $request->payment_id;
-        $order->tracking_no = 'store'.rand(1000, 99999);
+            $order->save();
 
-        $order->save();
+            $cart = Cart::where('customer_id', auth()->id())->get();
+            $order_items = [];
+            $total_price = 0;
+            foreach($cart as $item) {
+                $product = $item->product;
+                print('product: ');
+                print_r($product);
 
-        $cart = Cart::where('customer_id', auth()->id())->get();
-        $order_items = [];
-        foreach($cart as $item) {
-            $order_items[] = [
-                'product_id' => $item->product_id,
-                'quantity' => $item->quantity,
-                'price' => $item->product->price
-            ];
+                if (!$item->product) {
+                    print('product not found');
+                    continue;
 
-            $item->product->update([
-                'qauntity' => $item->product->qauntity - $item->qauntity
-            ]);
-            $total_price = $item->product->price * $item->qauntity;
+                }
+                dd($item->product);
+                $order_items[] = [
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
+                    'price' => $product->price
+                ];
+                $item_total_price = $product->price * $item->quantity;
+                $total_price += $item_total_price;
+                print('item total price: '.$item_total_price);
+                print('total price: '.$total_price);
+                $item->product->update([
+                    'quantity' => $product->quantity - $item->quantity
+                ]);
+                print('updated quantity: '.$product->quantity);
+                $total_price = $order->product->price * $item->quantity;
         }
 
         $order->order_items()->createMany($order_items);
@@ -50,8 +65,16 @@ class CheckoutController extends Controller
             'message' => 'successfully ordered',
             'order' => $order,
             'items' => $order_items,
-            'total price' => $total_price
+            'total price' => $total_price,
+
         ]);
+        } else {
+            return response()->json([
+                'message' => 'Unauthorized!'
+            ]);
+        }
+
+
     }
 
 

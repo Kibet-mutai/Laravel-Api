@@ -17,4 +17,8 @@ class OrderItem extends Model
     ];
 
     protected $table = 'orderitems';
+
+    public function order() {
+        return $this->belongsTo(Order::class);
+    }
 }
