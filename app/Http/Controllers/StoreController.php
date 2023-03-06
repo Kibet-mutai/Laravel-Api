@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Seller;
 use App\Models\Store;
 use Illuminate\Http\Request;
@@ -122,6 +123,18 @@ class StoreController extends Controller
         $store->seller_id = auth()->user()->id;
         $store->save();
 
+        $products = Product::where('seller_id', auth()->id())->get();
+        $store_items = [];
+        foreach($products as $p) {
+            $store_items[] = [
+                'product_id' => $p->product_id,
+                'image' => $p->image,
+                'price' => $p->price,
+                'quantity' => $p->quantity
+            ];
+
+            $store->product_items()->createMany($store_items);
+        }
         // $data['seller_id'] = auth()->user()->id;
 
         // Store::create($data);
