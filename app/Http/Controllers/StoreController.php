@@ -50,12 +50,19 @@ class StoreController extends Controller
         }
 
         $store = Store::findOrFail($id);
-        $product = $store->product_id;
-        $qty = $store->product_quantity;
+        $products = Product::where('seller_id', auth()->id())->get();
+        $store_items = [];
+        foreach($products as $p) {
+            $store_items[] = [
+                'product_id' => $p->product_id,
+                'image' => $p->image,
+                'price' => $p->price,
+                'quantity' => $p->quantity,
+                'name' => $p->name
+            ];}
         return response()->json([
             'store'=>$store,
-            'products'=>$product,
-            'qty'=>$qty
+            'store_items' => $store_items
         ]);
     }
 
@@ -130,7 +137,8 @@ class StoreController extends Controller
                 'product_id' => $p->product_id,
                 'image' => $p->image,
                 'price' => $p->price,
-                'quantity' => $p->quantity
+                'quantity' => $p->quantity,
+                'name' => $p->name
             ];
 
             $store->product_items()->createMany($store_items);
