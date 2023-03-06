@@ -126,8 +126,8 @@ class SellerController extends Controller
      */
 
      public function create(Request $request){
-        $user = Auth::user();
-        if ($user->seller) {
+        $seller = Auth::user();
+        if ($seller->seller) {
             return response()->json(['error' => 'You already have an account!']);
         }
         $data = $request->validate([

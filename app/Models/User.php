@@ -49,11 +49,11 @@ class User extends Authenticatable
 
     protected $guard = 'api';
 
-    public function sellers(){
+    public function seller(){
         return $this->hasOne(Seller::class);
     }
 
-    public function customers() {
+    public function customer() {
         return $this->hasOne(Customer::class);
     }
 }

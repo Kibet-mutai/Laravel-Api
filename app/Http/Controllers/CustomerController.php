@@ -87,8 +87,8 @@ class CustomerController extends Controller
      */
     public function create_profile(Request $request){
 
-        $user = Auth::user();
-        if ($user->customer) {
+        $customer = Auth::user();
+        if ($customer->customer) {
             return response()->json(['error' => 'You already have a profile']);
         }
         $data = $request->validate([
