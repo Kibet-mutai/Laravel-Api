@@ -22,7 +22,7 @@ class Store extends Model
         return $this->belongsTo(Seller::class);
     }
 
-    public function products() {
+    public function product_items() {
         return $this->hasMany(ProductItems::class, 'product_id', 'id');
     }
 }
