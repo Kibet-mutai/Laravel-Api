@@ -26,4 +26,8 @@ class Customer extends Model
     public function order(){
         return $this->hasOne(OrderItem::class);
     }
+
+    public function users(){
+        return $this->belongsTo(User::class);
+    }
 }

@@ -17,8 +17,16 @@ class Seller extends Model
         'address',
         'nearest_town'
     ];
-
+    protected $table = 'sellers';
     public function store(){
         return $this->hasOne(Store::class);
+    }
+
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

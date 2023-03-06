@@ -48,4 +48,12 @@ class User extends Authenticatable
     ];
 
     protected $guard = 'api';
+
+    public function sellers(){
+        return $this->hasOne(Seller::class);
+    }
+
+    public function customers() {
+        return $this->hasOne(Customer::class);
+    }
 }

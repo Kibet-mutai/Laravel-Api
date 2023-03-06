@@ -40,6 +40,7 @@ class CheckoutController extends Controller
             $item->product->update([
                 'qauntity' => $item->product->qauntity - $item->qauntity
             ]);
+            $total_price = $item->product->price * $item->qauntity;
         }
 
         $order->order_items()->createMany($order_items);
@@ -48,7 +49,8 @@ class CheckoutController extends Controller
         return response()->json([
             'message' => 'successfully ordered',
             'order' => $order,
-            'items' => $order_items
+            'items' => $order_items,
+            'total price' => $total_price
         ]);
     }
 

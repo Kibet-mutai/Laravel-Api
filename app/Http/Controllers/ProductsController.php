@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Seller;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -136,19 +137,26 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->check()) {
+            $data = $request->validate([
+                'name'=>'required',
+                'price'=> 'required',
+                'category_id' => 'required|exists:category,id',
+                'description'=> 'required',
+                'image'=> 'required',
+                'quantity'=> 'required',
+                // 'seller_id' => 'required|exists:seller_id'
+            ]);
 
-        $data = $request->validate([
-            'name'=>'required',
-            'price'=> 'required',
-            'category_id' => 'required|exists:category,id',
-            'description'=> 'required',
-            'image'=> 'required',
-            'quantity'=> 'required',
-        ]);
-
-        if($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('images', 'public');
+            if($request->hasFile('image')) {
+                $data['image'] = $request->file('image')->store('images', 'public');
+            }
+        } else {
+            return response()->json([
+                'message' => 'Unauthorized!'
+            ]);
         }
+        $seller = auth()->user()->id;
         $product = new Product;
         $product->name = $request->name;
         $product->price = $request->price;
@@ -156,7 +164,7 @@ class ProductsController extends Controller
         $product->category_id = $request->category_id;
         $product->description = $request->description;
         $product->image = $request->image;
-        $product->seller_id = auth()->user()->id;
+        $product->seller_id = $seller;
         $product->save();
         // Product::create($data);
 
