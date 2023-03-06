@@ -111,7 +111,7 @@ class CustomerController extends Controller
         $customer->county= $request->county;
         $customer->payment_method= $request->payment_method;
         $customer->payment_id= $request->payment_id;
-        $customer->balance = '40000';
+        $customer->balance = 40000;
 
         $customer->save();
 

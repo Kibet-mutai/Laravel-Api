@@ -30,18 +30,18 @@ class CheckoutController extends Controller
 
             $cart = Cart::where('customer_id', auth()->id())->get();
             $order_items = [];
+            // $customer_bal = $request->customer->balance;
             $total_price = 0;
             foreach($cart as $item) {
                 $product = $item->product;
-                print('product: ');
-                print_r($product);
+                // print('product: ');
+                // print_r($product);
 
                 if (!$item->product) {
-                    print('product not found');
+                    // print('product not found');
                     continue;
 
                 }
-                dd($item->product);
                 $order_items[] = [
                     'product_id' => $item->product_id,
                     'quantity' => $item->quantity,
@@ -49,13 +49,13 @@ class CheckoutController extends Controller
                 ];
                 $item_total_price = $product->price * $item->quantity;
                 $total_price += $item_total_price;
-                print('item total price: '.$item_total_price);
-                print('total price: '.$total_price);
+                // print('item total price: '.$item_total_price);
+                // print('total price: '.$total_price);
                 $item->product->update([
                     'quantity' => $product->quantity - $item->quantity
                 ]);
-                print('updated quantity: '.$product->quantity);
-                $total_price = $order->product->price * $item->quantity;
+                // print('updated quantity: '.$product->quantity);
+
         }
 
         $order->order_items()->createMany($order_items);
