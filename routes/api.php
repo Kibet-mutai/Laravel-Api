@@ -43,9 +43,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/category', [CategoryController::class, 'index']);
 
 
-    Route::post('/admin/category', [CategoryController::class, 'store'])->middleware('admin');
-    Route::put('/admin/category/{id}', [CategoryController::class, 'update'])->middleware('admin');
-    Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->middleware('admin');
+    Route::post('/admin/category', [CategoryController::class, 'store'])->middleware('role:admin');
+    Route::put('/admin/category/{id}', [CategoryController::class, 'update'])->middleware('role:admin');
+    Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->middleware('role:admin');
     Route::get('/category/{id}', [CategoryController::class, 'detail']);
 
 
@@ -63,14 +63,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/delete_profile/{id}', [CustomerController::class, 'delete_profile']);
     Route::get('profile/{id}', [CustomerController::class, 'profile']);
 
-    Route::post('/create', [SellerController::class, 'create'])->middleware('admin');
-    Route::put('/update/{id}', [SellerController::class, 'update'])->middleware('admin');
-    Route::delete('/delete/{id}', [SellerController::class, 'delete'])->middleware('admin');
-    Route::get('/seller/{id}', [SellerController::class, 'show'])->middleware('admin');
+    Route::post('/create', [SellerController::class, 'create'])->middleware('role:admin');
+    Route::put('/update/{id}', [SellerController::class, 'update'])->middleware('role:admin');
+    Route::delete('/delete/{id}', [SellerController::class, 'delete'])->middleware('role:admin');
+    Route::get('/seller/{id}', [SellerController::class, 'show'])->middleware('role:admin');
 
     Route::post('/create/store', [StoreController::class, 'create_store']);
     Route::delete('/delete/store/{id}', [StoreController::class, 'delete_store']);
-    Route::get('/store/{id}', [StoreController::class, 'show']);
+    Route::get('/store/{id}', [StoreController::class, 'show'])->middleware('role:admin');
 });
 
 

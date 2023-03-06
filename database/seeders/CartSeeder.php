@@ -15,6 +15,6 @@ class CartSeeder extends Seeder
      */
     public function run()
     {
-        Cart::factory(40)->create();
+        // Cart::factory(40)->create();
     }
 }
